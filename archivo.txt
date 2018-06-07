@@ -1,0 +1,21 @@
+pwd=lleva al home
+mkdir=make
+mkdir ProyectosDeGitHub
+ls=listar
+//copia el repositorio
+git clone
+//opcional
+git status
+
+//crear un archivo con el texto hola
+echo hola > saludar.txt
+
+//agregar una imagen del archivo creado, o sea guardar los cambios
+git add .
+//guardar la imagen tomada
+git commit -m agregue el nombre y apellido al readme
+//forzar la subida al repositorio
+git push origin master -f
+
+tdd=test driver developer
+
