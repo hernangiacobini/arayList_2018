@@ -61,7 +61,7 @@ ArrayList* al_newArrayList(void)
 
 
 /** \brief  Add an element to arrayList and if is
- *          nessesary resize the array
+ *          necesary resize the array
  * \param pList ArrayList* Pointer to arrayList
  * \param pElement void* Pointer to element
  * \return int Return (-1) if Error [pList or pElement are NULL pointer] - (0) if Ok
@@ -70,6 +70,26 @@ ArrayList* al_newArrayList(void)
 int al_add(ArrayList* this, void* pElement)
 {
     int returnAux = -1;
+
+    if(this != NULL && pElement != NULL)
+    {
+        if(this->size < this->reservedSize)
+        {
+            this->pElements[this->size]=pElement;
+            this->size++;
+            returnAux=0;
+        }
+        else
+        {
+            if(!resizeUp(this))
+            {
+                this->pElements[this->size]=pElement;
+                this->size++;
+                returnAux=0;
+            }
+        }
+    }
+
 
     return returnAux;
 }
@@ -302,7 +322,19 @@ int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
 int resizeUp(ArrayList* this)
 {
     int returnAux = -1;
+    void** auxiliarPElements;
 
+    if(this != NULL)
+    {
+        auxiliarPElements=realloc(this->pElements,sizeof(void*)*(this->reservedSize+AL_INCREMENT));
+
+        if(auxiliarPElements!=NULL)
+        {
+            this->reservedSize+=AL_INCREMENT;
+            this->pElements=auxiliarPElements;
+            returnAux=0;
+        }
+    }
     return returnAux;
 
 }
