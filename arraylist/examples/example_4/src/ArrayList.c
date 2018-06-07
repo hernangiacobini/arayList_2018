@@ -103,6 +103,12 @@ int al_deleteArrayList(ArrayList* this)
 {
     int returnAux = -1;
 
+    if(this!=NULL)
+    {
+        free(this->pElements);
+        returnAux=0;
+    }
+
     return returnAux;
 }
 
