@@ -215,10 +215,16 @@ int al_set(ArrayList* this, int index,void* pElement)
 int al_remove(ArrayList* this,int index)
 {
     int returnAux = -1;
+    int i;
 
     if(this != NULL && index>=0 && index < this->size)
     {
-
+        for(i=index;i<this->size;i++)
+        {
+            this->pElements[i]=this->pElements[i+1];
+            returnAux=0;
+        }
+    this->size-=1;
     }
 
     return returnAux;
@@ -234,6 +240,19 @@ int al_remove(ArrayList* this,int index)
 int al_clear(ArrayList* this)
 {
     int returnAux = -1;
+    void* auxRealloc;
+
+    if(this != NULL)
+    {
+        auxRealloc=realloc(this->pElements, sizeof(void*)*AL_INITIAL_VALUE);
+        if(auxRealloc!=NULL)
+        {
+            this->size=0;
+            this->reservedSize=AL_INITIAL_VALUE;
+            this->pElements=auxRealloc;
+            returnAux=0;
+        }
+    }
 
     return returnAux;
 }
@@ -248,6 +267,13 @@ int al_clear(ArrayList* this)
 ArrayList* al_clone(ArrayList* this)
 {
     ArrayList* returnAux = NULL;
+
+    if(this != NULL)
+    {
+        returnAux=al_newArrayList();
+        al_add(returnAux,al_get(this,i))
+
+    }
 
     return returnAux;
 }
