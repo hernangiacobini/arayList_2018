@@ -61,7 +61,7 @@ ArrayList* al_newArrayList(void)
 
 
 /** \brief  Add an element to arrayList and if is
- *          necesary resize the array
+ *          nessesary resize the array
  * \param pList ArrayList* Pointer to arrayList
  * \param pElement void* Pointer to element
  * \return int Return (-1) if Error [pList or pElement are NULL pointer] - (0) if Ok
@@ -70,7 +70,6 @@ ArrayList* al_newArrayList(void)
 int al_add(ArrayList* this, void* pElement)
 {
     int returnAux = -1;
-
     if(this != NULL && pElement != NULL)
     {
         if(this->size < this->reservedSize)
@@ -83,8 +82,6 @@ int al_add(ArrayList* this, void* pElement)
         {
             if(!resizeUp(this))
             {
-                this->pElements[this->size]=pElement;
-                this->size++;
                 returnAux=0;
             }
         }
@@ -92,6 +89,7 @@ int al_add(ArrayList* this, void* pElement)
 
 
     return returnAux;
+
 }
 
 /** \brief  Delete arrayList
@@ -103,16 +101,16 @@ int al_deleteArrayList(ArrayList* this)
 {
     int returnAux = -1;
 
-    if(this!=NULL)
+    if(this != NULL && this->reservedSize>0)
     {
-        free(this->pElements);
-        returnAux=0;
+       free(this->pElements);
+       returnAux=0;
     }
 
     return returnAux;
 }
 
-/** \brief  Delete arrayList
+/** \brief  Len arrayList
  * \param pList ArrayList* Pointer to arrayList
  * \return int Return length of array or (-1) if Error [pList is NULL pointer]
  *
@@ -120,6 +118,11 @@ int al_deleteArrayList(ArrayList* this)
 int al_len(ArrayList* this)
 {
     int returnAux = -1;
+
+    if(this != NULL)
+    {
+        returnAux=this->size;
+    }
 
     return returnAux;
 }
@@ -135,6 +138,13 @@ void* al_get(ArrayList* this, int index)
 {
     void* returnAux = NULL;
 
+    if(this != NULL)
+    {
+        if(index<=this->size && index>=0)
+        {
+            returnAux=this->pElements[index];
+        }
+    }
     return returnAux;
 }
 
@@ -150,12 +160,31 @@ void* al_get(ArrayList* this, int index)
 int al_contains(ArrayList* this, void* pElement)
 {
     int returnAux = -1;
+    int i;
 
+    if(this != NULL)
+    {
+        if(pElement != NULL)
+        {
+            for(i=0;i < this->size;i++)
+            {
+                if(this->pElements[i]==pElement)
+                {
+                    returnAux=1;
+                    break;
+                }
+                else
+                {
+                    returnAux=0;
+                }
+            }
+        }
+    }
     return returnAux;
 }
 
 
-/** \brief  Set a element in pList at index position
+/** \brief  Set an element in pList at index position
  * \param pList ArrayList* Pointer to arrayList
  * \param index int Index of the element
  * \param pElement void* Pointer to element
@@ -166,6 +195,12 @@ int al_contains(ArrayList* this, void* pElement)
 int al_set(ArrayList* this, int index,void* pElement)
 {
     int returnAux = -1;
+
+    if(this != NULL && pElement != NULL && index >= 0 && index < this->size)
+    {
+        this->pElements[index]=pElement;
+        returnAux=0;
+    }
 
     return returnAux;
 }
@@ -180,6 +215,11 @@ int al_set(ArrayList* this, int index,void* pElement)
 int al_remove(ArrayList* this,int index)
 {
     int returnAux = -1;
+
+    if(this != NULL && index>=0 && index < this->size)
+    {
+
+    }
 
     return returnAux;
 }
@@ -328,19 +368,19 @@ int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
 int resizeUp(ArrayList* this)
 {
     int returnAux = -1;
-    void** auxiliarPElements;
+    void* auxPuntero;
 
     if(this != NULL)
     {
-        auxiliarPElements=realloc(this->pElements,sizeof(void*)*(this->reservedSize+AL_INCREMENT));
-
-        if(auxiliarPElements!=NULL)
+        auxPuntero = realloc(this->pElements, sizeof(void*)*(this->reservedSize+AL_INCREMENT));
+        if(auxPuntero != NULL)
         {
-            this->reservedSize+=AL_INCREMENT;
-            this->pElements=auxiliarPElements;
+            this->pElements = auxPuntero;
+            this->reservedSize = this->reservedSize+AL_INCREMENT;
             returnAux=0;
         }
     }
+
     return returnAux;
 
 }
