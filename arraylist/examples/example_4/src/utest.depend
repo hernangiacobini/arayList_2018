@@ -2242,19 +2242,18 @@
 	<string.h>
 	"../inc/ArrayList.h"
 
-1528927954 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/Employee.c
+1529018264 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/Employee.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"../inc/Employee.h"
 
-1528927954 /home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/inc/Employee.h
+1529018404 /home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/inc/Employee.h
 
-1528934199 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/main.c
+1529017207 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
-	"../testing/inc/main_test.h"
 	"../inc/ArrayList.h"
 	"../inc/Employee.h"
 
@@ -2461,7 +2460,7 @@
 	<stdlib.h>
 	<string.h>
 
-1528936104 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/ArrayList.c
+1529018473 source:/home/alumno/Escritorio/arayList_2018/arraylist/examples/example_4/src/ArrayList.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

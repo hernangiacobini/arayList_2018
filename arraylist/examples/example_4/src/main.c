@@ -20,36 +20,63 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../testing/inc/main_test.h"
 #include "../inc/ArrayList.h"
 #include "../inc/Employee.h"
 
 
+void cargarDatos(ArrayList* lista, char* nombreArchivo);
 
 int main(void)
 {
-        startTesting(1);
-        startTesting(2);
-        startTesting(3);
-        startTesting(4);
-        startTesting(5);
-        startTesting(6);
-        startTesting(7);
-        startTesting(8);
-        startTesting(9);
-        startTesting(10);
-        startTesting(11);
-        startTesting(12);
-        startTesting(13);
-        startTesting(14);
-        startTesting(15);
-        startTesting(16);
-        //startTesting(17);
+    ArrayList* listaTotal;
+    listaTotal = al_newArrayList();
+    ArrayList* listaNegra;
+    listaNegra = al_newArrayList();
+    ArrayList* listaBlanca;
+    listaBlanca = al_newArrayList();
+
+    cargarDatos(listaTotal,"destinatarios.csv");
+    cargarDatos(listaNegra,"black_list.csv");
 
     return 0;
 }
 
+void cargarDatos(ArrayList* lista, char* nombreArchivo)
+{
+    FILE* archivo;
+    archivo=fopen(nombreArchivo,"r");
+
+    char auxNombre[51];
+    char auxEmail[51];
+
+    if(archivo != NULL)
+    {
+        do
+        {
+            int partes = fscanf(archivo,"%[^,],%[\n]\n",auxNombre,auxEmail);
+
+            if(partes==2)
+            {
+                Employee* auxempl = newEmployee(auxNombre,auxEmail);
+
+                al_add(lista,auxempl);
+            }
+
+        }while(!feof(archivo));
+    }
+}
 
 
+int compareField(void* campo1, void* campo2)
+{
+    int returnAux = -1;
+    int i;
 
+    if(campo1 != NULL && campo2 != NULL)
+    {
+
+    }
+    return returnAux;
+}
+}
 

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../inc/ArrayList.h"
+#include "ArrayList.h"
 
 // funciones privadas
 int resizeUp(ArrayList* this);
@@ -47,7 +47,7 @@ ArrayList* al_newArrayList(void)
             this->subList=al_subList;
             this->containsAll=al_containsAll;
             this->deleteArrayList = al_deleteArrayList;
-            //this->sort = al_sort;
+            this->sort = al_sort;
             returnAux = this;
         }
         else
@@ -465,17 +465,33 @@ int al_containsAll(ArrayList* this,ArrayList* this2)
  * \return int Return (-1) if Error [pList or pFunc are NULL pointer]
  *                  - (0) if ok
  */
-/*int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
+int al_sort(ArrayList* this, int (*pFunc)(void* ,void*), int order)
 {
     int returnAux = -1;
 
-    if(this != NULL && pFunc != NULL && order == 0 || order == 1)
+    if(this != NULL && pFunc != NULL && (order == 0 || order == 1))
     {
+        int i;
+        int j;
+        void* auxLista;
 
+        for(i=1;i<(this->size);i++)
+        {
+            j=i-1;
+            auxLista=al_get(this,i);
+
+            while((j>=0 && pFunc(auxLista,al_get(this,j))==-1 && order==1) || (j>=0 && pFunc(auxLista,al_get(this,j))==1 && order==0))
+            {
+                al_set(this,j+1,al_get(this,j));
+                j--;
+            }
+            al_set(this,j+1,auxLista);
+        }
+        returnAux=0;
     }
 
     return returnAux;
-}*/
+}
 
 
 /** \brief Increment the number of elements in pList in AL_INCREMENT elements.
@@ -527,4 +543,18 @@ int contract(ArrayList* this,int index)
     int returnAux = -1;
 
     return returnAux;
+}
+
+int al_map(ArrayList* this, void (*pFunc)(void*))
+{
+    int i;
+
+    if(this != NULL)
+    {
+        for(i=0;i<al_len(this);i++)
+        {
+            pFunc(al_get(this,i));
+        }
+    }
+    return 0;
 }
